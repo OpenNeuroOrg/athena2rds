@@ -40,15 +40,16 @@ jobs:
             $HOME/conda/bin/python etl.py
 
 workflows:
-  version: 2
-  schedule-workflow:
-    triggers:
-      - schedule:
-          cron: "35 * * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - build
+   version: 2
+   nightly:
+     triggers:
+       - schedule:
+           cron: "0 0 * * *"
+           filters:
+             branches:
+               only:
+                 - master
+     jobs:
+       - build
+
   
