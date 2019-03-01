@@ -41,10 +41,10 @@ jobs:
 
 workflows:
    version: 2
-   nightly:
+   monthly:
      triggers:
        - schedule:
-           cron: "40 * * * *"
+           cron: "40 1 1 * *"
            filters:
              branches:
                only:
