@@ -32,3 +32,5 @@ engine = create_engine(os.environ['RDS_JDBC'])
 conn = engine.connect()
 df.to_sql(con=engine, name='s3_logs_monthly', if_exists='replace', index=False, method='multi')
 conn.close()
+
+print('finished')

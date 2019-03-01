@@ -34,7 +34,14 @@ jobs:
           key: v2-dependencies
         
       - run:
-          name: build container
+          name: transfer data
           command: |
             cd ~/repo
             $HOME/conda/bin/python etl.py
+
+workflows:
+  version: 2
+  schedule-workflow:
+    triggers:
+      - schedule:
+          cron: "35 * * * *"
