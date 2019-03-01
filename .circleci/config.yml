@@ -24,7 +24,7 @@ jobs:
                 /bin/bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/conda
                 export PATH=$HOME/conda/bin:$PATH
                 $HOME/conda/bin/conda install pandas sqlalchemy psycopg2
-                $HOME/conda/bin/pip pyathena
+                $HOME/conda/bin/pip install pyathena
             else
                 echo "Miniconda is already installed, continuing to build."
             fi
