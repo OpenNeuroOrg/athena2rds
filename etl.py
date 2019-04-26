@@ -18,7 +18,7 @@ SELECT client,
 FROM 
     (SELECT replace(split_part(useragent,
          '/',1), '"') AS client, remoteip, bytessent, date_format(parse_datetime(RequestDateTime,'dd/MMM/yyyy:HH:mm:ss Z'), '%Y%m01') AS yearmonth
-    FROM openneuro_access_logs_db.mybucket_logs
+    FROM openneuro_access_logs_db.updated_access_logs_format
     WHERE STRPOS(useragent, '/') != 0
             AND bytessent > 0
             AND (httpstatus = '200'
