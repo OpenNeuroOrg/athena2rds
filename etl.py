@@ -1,12 +1,14 @@
 import os
 import pandas as pd
 from pyathena import connect
+from pyathena.pandas_cursor import PandasCursor
 from sqlalchemy import event, create_engine
 
-conn = connect(aws_access_key_id=os.environ['AWS_KEY'],
-               aws_secret_access_key=os.environ['AWS_SECRET'],
-               s3_staging_dir='s3://aws-athena-query-results-109587625339-us-east-1/',
-               region_name='us-east-1')
+cursor = connect(aws_access_key_id=os.environ['AWS_KEY'],
+                 aws_secret_access_key=os.environ['AWS_SECRET'],
+                 s3_staging_dir='s3://aws-athena-query-results-109587625339-us-east-1/',
+                 region_name='us-east-1',
+                 cursor_class=PandasCursor).cursor()
 
 # RequestDateTime column is not indexed to querying only the recent
 # entries does not yield performance or cost improvements
@@ -25,8 +27,7 @@ FROM
             OR httpstatus = '206'))
 GROUP BY  client, remoteip, yearmonth
 """
-df = pd.read_sql(get_all_query, conn)
-
+df = cursor.execute(get_all_query).as_pandas()
 
 engine = create_engine(os.environ['RDS_JDBC'])
 conn = engine.connect()
